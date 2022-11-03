@@ -76,6 +76,25 @@ public class CarController : MonoBehaviour
         }
         slipAngle = Vector3.Angle(transform.forward, playerRB.velocity-transform.forward);
 
+                //fixed code to brake even after going on reverse by Andrew Alex 
+        float movingDirection = Vector3.Dot(transform.forward, playerRB.velocity);
+        if (movingDirection < -0.5f && gasInput > 0)
+        {
+            brakeInput = Mathf.Abs(gasInput);
+        }
+        else if (movingDirection > 0.5f && gasInput < 0)
+        {
+            brakeInput = Mathf.Abs(gasInput);
+        }
+        else
+        {
+            brakeInput = 0;
+        }
+        
+
+
+        /*
+        old tutorial code
         if (slipAngle < 120f) {
             if (gasInput < 0)
             {
@@ -90,7 +109,7 @@ public class CarController : MonoBehaviour
         else
         {
             brakeInput = 0;
-        }
+        }*/
 
     }
     void ApplyBrake()
